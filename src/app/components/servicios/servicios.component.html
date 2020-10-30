@@ -1,7 +1,7 @@
 <div class="container">
 	<h3>{{Titulo}}</h3>
 	<div>
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered table-striped" *ngIf="AccionActual == Acciones[0]">
 			<thead>
 				<tr>
 					<th class="text-center">IdSerivico</th>
@@ -11,7 +11,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let servicio of Servicios">
+				<tr *ngFor="let servicio of Items">
 					<td>{{servicio.idservicio}}</td>
 					<td>{{servicio.descripcion}}</td>
 					<td>{{servicio.importe}}</td>
@@ -19,5 +19,68 @@
 				</tr>
 			</tbody>
 		</table>
+		<button class="btn btn-success" (click)="showAltaForm()" *ngIf="AccionActual == Acciones[0]">Añadir un nuevo servicio</button>
+	</div>
+
+	<div class="bg-light mt-4" *ngIf="AccionActual == Acciones[1]">
+		<form name="FormGrabar" [formGroup]="FormGrabar">
+
+			<div class="form-group">
+				<label class="col-form-label col-sm-2 text-left">
+          Id:
+        </label>
+				<input type="text" name="IdServicio" class="form-control" formControlName="IdServicio" disabled>
+      </div>
+
+				<div class="form-group">
+					<label class="col-form-label col-sm-2 text-left">
+          Descripcion:
+        </label>
+					<input type="text" name="DescripcionServicio" class="form-control" formControlName="DescripcionServicio"  [ngClass]="{'is-invalid':(FormGrabar.controls.DescripcionServicio.touched || submitted) && FormGrabar.controls.DescripcionServicio.errors}" >
+
+					<div class="invalid-feedback"
+						*ngIf="FormGrabar.get('DescripcionServicio').touched && FormGrabar.get('DescripcionServicio').invalid">
+						<div *ngIf="FormGrabar.get('DescripcionServicio').errors.required">Descripcion es requerido
+						</div>
+						<div *ngIf="FormGrabar.get('DescripcionServicio').errors.maxlength">Dato texto, maximo 50
+							caracteres.</div>
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-form-label col-sm-2 text-left">
+          Importe:
+        </label>
+
+					<input type="text" name="ImporteServicio" class="form-control" formControlName="ImporteServicio"  [ngClass]="{'is-invalid':(FormGrabar.controls.ImporteServicio.touched || submitted) && FormGrabar.controls.ImporteServicio.errors}">
+
+					<div class="invalid-feedback"
+						*ngIf="FormGrabar.get('ImporteServicio').touched && FormGrabar.get('ImporteServicio').invalid">
+						<div *ngIf="FormGrabar.get('ImporteServicio').errors.required">Importe es requerido
+						</div>
+						<div
+							*ngIf="FormGrabar.get('ImporteServicio').errors.pattern || FormGrabar.get('ImporteServicio').errors.maxlength">
+							Dato numerico, maximo 12 cifra y 2 decimales.</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-form-label col-sm-2 text-left">
+          Cantidad de Horas:
+        </label>
+					<input type="text" name="CantidadHorasServicio" class="form-control" formControlName="CantidadHorasServicio"  [ngClass]="{'is-invalid':(FormGrabar.controls.CantidadHorasServicio.touched || submitted) && FormGrabar.controls.CantidadHorasServicio.errors}" >
+					<div class="invalid-feedback"
+						*ngIf="FormGrabar.get('CantidadHorasServicio').touched && FormGrabar.get('CantidadHorasServicio').invalid">
+						<div *ngIf="FormGrabar.get('CantidadHorasServicio').errors.required">Cantidad Horas es requerido
+						</div>
+					</div>
+
+				</div>
+
+		</form>
+		<button class="btn btn-success" (click)="alta()">Grabar</button>
+		<button class="btn btn-danger" (click)="volver()">Cancelar</button>
+
 	</div>
 </div>

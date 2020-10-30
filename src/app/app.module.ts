@@ -52,8 +52,7 @@ import { ServiciosService } from "./services/servicios.service";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyInterceptor,
-      multi: true,
-      providers: [ServiciosService]
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

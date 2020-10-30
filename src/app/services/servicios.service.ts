@@ -2,7 +2,9 @@ import { Injectable } from "@angular/core";
 import { Servicio } from "../models/servicio";
 import { HttpClient } from "@angular/common/http";
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class ServiciosService {
   url: string;
 
@@ -12,10 +14,6 @@ export class ServiciosService {
 
   get() {
     return this.httpClient.get(this.url);
-  }
-
-  getById(id: number) {
-    return this.httpClient.get(this.url + id);
   }
 
   post(servicio: Servicio) {
